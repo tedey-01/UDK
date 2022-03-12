@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# my changes
+**/data*/
+**/.DS_Store
+**/log_parser.txt
