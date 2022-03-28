@@ -2,9 +2,10 @@ import pandas as pd
 import numpy as np
 import os 
 import re 
+# pip install PyMuPDF for fitz (PDF parser)
+import fitz
 
-
-DATA_PATH = os.path.join('..', 'data')
+DATA_PATH = os.path.join('..', 'data_1')
 
 
 def extract_udk(filename: str):
@@ -15,15 +16,19 @@ def extract_udk(filename: str):
 
 
 def fill_dataset(data_path: str):
-    docs_names = os.listdir(data_path)
+    docs_names = [file for file in os.listdir(data_path) if file[-3:] == 'pdf']
     texts, udks = [], []
-    
     for doc_name in docs_names:
         doc_path = os.path.join(data_path, doc_name)
         udks.append(extract_udk(doc_name))
-        with open(doc_path, 'rb') as f:
-            texts.append(f.read())
         
+        full_text = ''
+        f = fitz.open(doc_path)
+        for page in f:
+            text = re.sub(r"[-\n\t]*", "", page.get_text())
+            full_text += text
+        texts.append(full_text)
+
     return pd.DataFrame(np.array([texts, udks]).transpose(), columns=['text', 'udk'])
 
 
