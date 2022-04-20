@@ -4,7 +4,7 @@ import yadisk
 
 TOKEN = "AQAAAABf0mDbAAfRILWUrGyexE5BjRS_rtLyAWc"
 
-def upload_files(ynd_api, from_dir, to_dir):
+def upload_files(ynd_api: object, from_dir: str, to_dir: str):
     parent_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
     from_dir = os.path.join(parent_dir, from_dir)
     docs_names = [file for file in os.listdir(from_dir)]
@@ -26,3 +26,4 @@ if __name__ == '__main__':
     to_dir = "database"
     from_dir = "data_1"
     upload_files(ynd_api, from_dir, to_dir)
+    
