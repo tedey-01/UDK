@@ -1,7 +1,7 @@
-import pandas as pd 
+import pandas as pd
 import numpy as np
-import os 
-import re 
+import os
+import re
 
 
 DATA_PATH = os.path.join('..', 'data')
@@ -17,18 +17,18 @@ def extract_udk(filename: str):
 def fill_dataset(data_path: str):
     docs_names = os.listdir(data_path)
     texts, udks = [], []
-    
+
     for doc_name in docs_names:
         doc_path = os.path.join(data_path, doc_name)
         udks.append(extract_udk(doc_name))
         with open(doc_path, 'rb') as f:
             texts.append(f.read())
-        
+
     return pd.DataFrame(np.array([texts, udks]).transpose(), columns=['text', 'udk'])
 
 
 if __name__ == '__main__':
-    dataset_path =  os.path.join(DATA_PATH, 'dataset.csv')
+    dataset_path = os.path.join(DATA_PATH, 'dataset.csv')
     df = fill_dataset(DATA_PATH)
     df.to_csv(dataset_path, index=False)
 
