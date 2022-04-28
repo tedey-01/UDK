@@ -27,6 +27,7 @@ def download_files_from_ynd(ynd_api: object, from_dir: str, to_dir: str):
     parent_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
     to_dir = os.path.join(parent_dir, to_dir)
     docs_names = [file.name for file in ynd_api.listdir(from_dir)]
+    docs_names = [d for d in docs_names if os.path.splitext(d)[-1] in ['.csv', '.joblib']]
 
     os.makedirs(to_dir, exist_ok=True)
     for filename in docs_names:
