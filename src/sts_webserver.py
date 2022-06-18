@@ -1,28 +1,30 @@
 import os
 import use_model
+import logging
 
 from flask import Flask, request
 from flask import json as flask_json
 
-# cli = sys.modules['flask.cli'] # workaround - otherwise doesn't work in windows servoce.
-# cli.show_server_banner = lambda *x: None 
+
+logging.basicConfig(filename='service.log', level=logging.DEBUG)
+app = Flask('SemSearch')
 
 DATA_CORPUS_PATH = os.path.join("..", "data", "dataset.csv")
 EMBEDDINGS_PATH = os.path.join("..", "data", "embeddings.joblib")
 sts_use = use_model.STS_USE(DATA_CORPUS_PATH, EMBEDDINGS_PATH)
-app = Flask('SemSearch')
 
 
 @app.route('/find_similar', methods=["POST"])
 def estimate_changes():
     content = request.get_json()
+    app.logger.error(f"INPUT: {content}")
 
     text = content['text']
     top_n = content['top_n']
 
-    pred = sts_use.predict(text, top_n)
-    print(pred)
-    return flask_json.dumps(pred, ensure_ascii=False)
+    predict = sts_use.predict(text, top_n)
+    app.logger.info(f"PREDICT: {predict}")
+    return flask_json.dumps(predict, ensure_ascii=False)
 
 
 def start():
