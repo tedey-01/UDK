@@ -1,9 +1,9 @@
-import pandas as pd 
+import pandas as pd
 import numpy as np
 import os 
 import re 
-# pip install PyMuPDF for fitz (PDF parser)
 import fitz
+
 
 DATA_PATH = os.path.join('..', 'data_1')
 
@@ -33,7 +33,7 @@ def fill_dataset(data_path: str):
 
 
 if __name__ == '__main__':
-    dataset_path =  os.path.join(DATA_PATH, 'dataset.csv')
+    dataset_path = os.path.join(DATA_PATH, 'dataset.csv')
     df = fill_dataset(DATA_PATH)
     df.to_csv(dataset_path, index=False)
 

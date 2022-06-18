@@ -1,8 +1,8 @@
-import os 
-import re 
+import os
+import re
 import ssl
-import requests 
-import logging 
+import requests
+import logging
 
 from bs4 import BeautifulSoup
 from collections import namedtuple
@@ -15,7 +15,7 @@ logging.basicConfig(handlers=[logging.FileHandler(filename="./log_parser.txt",
                     datefmt="%F %A %T", 
                     level=logging.INFO)
 
-headers ={
+headers = {
     'Connection': 'keep-alive',
     'Cache-Control': 'max-age=0',
     'Upgrade-Insecure-Requests': '1',
